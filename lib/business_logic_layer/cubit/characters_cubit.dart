@@ -36,6 +36,7 @@ class CharactersCubit extends Cubit<CharactersState> {
       (quotes) {
         print('The quotes are from $charName');
         print('First quotes = ${quotes[0].quote}');
+        print('Total quotes = ${quotes.length}');
         emit(QuotesLoaded(quotes)); // put quotes list in QuotesLoaded state
       },
     ).catchError(

@@ -20,6 +20,7 @@ class CharacterDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: MyColors.myGrey,
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           _buildSliverAppBar(context),
           SliverList(
@@ -157,15 +158,15 @@ class CharacterDetailsScreen extends StatelessWidget {
   }
 
 // Start Quote text
-  Widget _checkIfQuotesAreLoaded(CharactersState state) {
+  Widget _checkIfQuotesAreLoaded(state) {
     if (state is QuotesLoaded) {
       return _displayRandomQuoteOrCleanSpace(state);
     } else {
-      return _showProgressIndictor();
+      return Container();
     }
   }
 
-  Widget _displayRandomQuoteOrCleanSpace(QuotesLoaded state) {
+  Widget _displayRandomQuoteOrCleanSpace(state) {
     List quotes = state.quotes;
 
     if (quotes.length != 0) {
@@ -176,37 +177,46 @@ class CharacterDetailsScreen extends StatelessWidget {
     }
   }
 
-  Center _buildQuoteText(List<dynamic> quotes, int randomQuoteIndex) {
-    return Center(
-      child: DefaultTextStyle(
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          fontSize: 20,
-          color: MyColors.myWhite,
-          shadows: [
-            Shadow(
-              blurRadius: 5,
+  Column _buildQuoteText(List<dynamic> quotes, int randomQuoteIndex) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Total Quotes For ${character.name} = ${quotes.length}',
+              style: TextStyle(
+                color: MyColors.myWhite,
+                fontSize: 18,
+              ),
+              softWrap: true,
+            ),
+          ],
+        ),
+        SizedBox(height: 16),
+        Center(
+          child: DefaultTextStyle(
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 20,
               color: MyColors.myWhite,
-              offset: Offset(0.3, 0),
-            )
-          ],
+              shadows: [
+                Shadow(
+                  blurRadius: 5,
+                  color: MyColors.myWhite,
+                  offset: Offset(0.3, 0),
+                )
+              ],
+            ),
+            child: AnimatedTextKit(
+              pause: Duration(seconds: 1),
+              repeatForever: true,
+              animatedTexts: [
+                FlickerAnimatedText(quotes[randomQuoteIndex].quote),
+              ],
+            ),
+          ),
         ),
-        child: AnimatedTextKit(
-          pause: Duration(seconds: 1),
-          repeatForever: true,
-          animatedTexts: [
-            FlickerAnimatedText(quotes[randomQuoteIndex].quote),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Center _showProgressIndictor() {
-    return Center(
-      child: CircularProgressIndicator(
-        color: MyColors.myYellow,
-      ),
+      ],
     );
   }
 }

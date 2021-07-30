@@ -12,7 +12,7 @@ class CharactersLoaded extends CharactersState {
 }
 
 class CharactersError extends CharactersState {
-  final String errorMessage;
+  final dynamic errorMessage;
 
   CharactersError(this.errorMessage);
 }

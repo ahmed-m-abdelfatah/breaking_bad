@@ -12,14 +12,10 @@ const charactersScreen = '/';
 const charactersDetailsScreen = '/characters_details';
 
 class AppRouter {
-  late CharactersCubit charactersCubitOne;
-  late CharactersCubit charactersCubitTwo;
   late CharactersRepository charactersRepository;
 
   AppRouter() {
     charactersRepository = CharactersRepository(CharactersWebSeervices());
-    charactersCubitOne = CharactersCubit(charactersRepository);
-    charactersCubitTwo = CharactersCubit(charactersRepository);
   }
 
   Route? generateRoute(RouteSettings settings) {
@@ -36,7 +32,7 @@ class AppRouter {
   MaterialPageRoute<dynamic> _goToCharactersScreen() {
     return MaterialPageRoute(
       builder: (_) => BlocProvider(
-        create: (_) => charactersCubitOne,
+        create: (_) => CharactersCubit(charactersRepository),
         child: CharactersScreen(),
       ),
     );
@@ -47,7 +43,7 @@ class AppRouter {
   ) {
     return MaterialPageRoute(
         builder: (_) => BlocProvider(
-              create: (_) => charactersCubitTwo,
+              create: (_) => CharactersCubit(charactersRepository),
               child: CharacterDetailsScreen(character: selectedCharacter),
             ));
   }

@@ -1,8 +1,9 @@
-import 'block_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'app_router.dart';
+import 'block_observer.dart';
+import 'constants/my_colors.dart';
 
 void main() {
   Bloc.observer = MyBlocObserver();
@@ -18,6 +19,7 @@ class BreakingBadApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: appRouter.generateRoute,
+      theme: ThemeData(canvasColor: MyColors.myGrey),
     );
   }
 }
